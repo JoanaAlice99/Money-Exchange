@@ -67,3 +67,26 @@ int main(int argc, char const *argv[]){
 
     return 0;
 }
+
+
+/*
+
+def calcchange(purchamt, payamt):
+change = payamt - purchamt
+
+cents = change*100+0.01
+
+print cents
+dollars = int(cents /100)
+cents = cents %100
+quarters = int(cents/25)
+cents = cents %25
+dimes = int(cents/10)
+cents = cents %10
+nickels = int(cents/5)
+cents = cents %5
+pennies = int(cents)
+
+return change, dollars, quarters, dimes, nickels, pennies
+
+*/
