@@ -4,8 +4,17 @@ using namespace std;
 
 class Menu{
     public:
-        void erro(){
-            cout << "\nNota invalida";
+        void erro(int err_numero){
+            switch (err_numero){
+                case 1:
+                    cout << "\nNota invalida";
+                    break;
+                case 2:
+                    cout << "\nOpcao invalida";
+                    break;
+                default:
+                    break;
+            }
         }
         
         void menu_troco(){
@@ -125,7 +134,7 @@ int main(int argc, char const *argv[]){
                 cout << "Pagamento> "; cin >> pagamento; 
                 esp=programa.calc_troco(valor,pagamento);
                 if (*(esp+0)==1){
-                    menu.erro();
+                    menu.erro(1);
                 }else{
                     for (size_t i=1;i<=8;i++){
                         if(*(esp+i)!=0){
@@ -133,62 +142,74 @@ int main(int argc, char const *argv[]){
 
                                 switch (i){
                                     case 1:
-                                        cout << *(esp+i) << " moedas de 2 euros";
+                                        cout << *(esp+i) << " moedas de 2 euros" << endl;
                                         break;
                                     case 2:
-                                        cout << *(esp+i) << " moedas de 1 euro";
+                                        cout << *(esp+i) << " moedas de 1 euro" << endl;
                                         break;
                                     case 3:
-                                        cout << *(esp+i) << " moedas de 50 centimos";
+                                        cout << *(esp+i) << " moedas de 50 centimos" << endl;
                                         break;
-                                    /*etc..*/
-                                    
+                                    case 4:
+                                        cout << *(esp+i) << " moedas de 20 centimos" << endl;
+                                        break;
+                                    case 5:
+                                        cout << *(esp+i) << " moedas de 10 centimos" << endl;
+                                        break;
+                                    case 6:
+                                        cout << *(esp+i) << " moedas de 5 centimos" << endl;
+                                        break;
+                                    case 7:
+                                        cout << *(esp+i) << " moedas de 2 centimos" << endl;
+                                        break;
+                                    case 8:
+                                        cout << *(esp+i) << " moedas de 1 centimo" << endl;
+                                        break;
                                     default:
                                         break;
                                 }
-                                
                             }else{
-
                                 switch (i){
                                     case 1:
-                                        cout << *(esp+i) << " moeda de 2 euros";
+                                        cout << *(esp+i) << " moeda de 2 euros" << endl;
                                         break;
                                     case 2:
-                                        cout << *(esp+i) << " moeda de 1 euro";
+                                        cout << *(esp+i) << " moeda de 1 euro" << endl;
                                         break;
                                     case 3:
-                                        cout << *(esp+i) << " moeda de 50 centimos";
+                                        cout << *(esp+i) << " moeda de 50 centimos" << endl;
                                         break;
-                                    /*etc..*/
-                                    
+                                    case 4:
+                                        cout << *(esp+i) << " moeda de 20 centimos" << endl;
+                                        break;
+                                    case 5:
+                                        cout << *(esp+i) << " moeda de 10 centimos" << endl;
+                                        break;
+                                    case 6:
+                                        cout << *(esp+i) << " moeda de 5 centimos" << endl;
+                                        break;
+                                    case 7:
+                                        cout << *(esp+i) << " moeda de 2 centimos" << endl;
+                                        break;
+                                    case 8:
+                                        cout << *(esp+i) << " moeda de 1 centimo" << endl;
+                                        break;
                                     default:
                                         break;
                                 }
-
                             }
-                            
-                            
                         }
-                    }
-                    
+                    } 
                 }
-                
-                
+                system("pause");
                 break;
             case 0:
                 break;
             default:
+                menu.erro(2);
                 break;
         }
     }
-    
-
-    for (size_t i=0;i<=8;i++){
-
-        cout << *(esp+i) << endl;
-    }
-
-    system("pause");
 
     return 0;
 }
