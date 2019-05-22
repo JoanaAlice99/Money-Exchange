@@ -8,18 +8,24 @@ class Menu{
             cout << "\nNota invalida";
         }
         
-        void menu(){
-            cout << "\n\t\t\tCAIXA DE PAGAMENTO\n\tSo sao aceites notas entre 5, 10, 20, 50, 100, 200, 500";
+        void menu_troco(){
+            cout << "\n\t\t\tCAIXA DE PAGAMENTO\n\tSo sao aceites notas entre 5, 10, 20, 50, 100, 200, 500\n\n";
         }
+
+        void menu_principal(){
+            cout << "\n\t\t\tCAIXA DE PAGAMENTO\n\t1 - Calcular Troco\n0 - Sair\n\nInput> ";
+        }
+
 };
 
 class Programa{
     private:
-        Menu menu;
         int notas_aceites[8] = {0,5,10,20,50,100,200,500};
-        //int troco[9];
 
-        int troco;
+        float valor;
+        int pagamento;
+        float troco;
+        int centimos;
 
         int euro_2;
         int euro_1;
@@ -30,8 +36,10 @@ class Programa{
         int cent_2;
         int cent_1;
 
+        int eax[9];
+
     public:
-        void calc_troco(float valor, int pagamento){
+        int * calc_troco(float valor, int pagamento){
 
             for (size_t i=1;i<8;i++){
                 if (pagamento == notas_aceites[i]){
@@ -40,53 +48,56 @@ class Programa{
             }
 
             if (notas_aceites[0] != 1){
-                menu.erro();
-                //return 0;
+                eax[0]=1;
+                return eax;
             }else{
-                //Total Troco
-                troco=(pagamento-valor)*100;
+                eax[0]=0;
+
+                troco = pagamento-valor;
                 cout << "Troco> " << troco << endl;
 
+                centimos = troco*100+0.01;
+
                 //Troco 2€
-                euro_2=troco/200;
-                troco=troco%200;
-                cout << "2.00> " << euro_2 << "Troco> " << troco << endl;
+                euro_2=centimos/200;
+                centimos=centimos%200;
+                eax[1]=euro_2;
 
                 //Troco 1€
-                euro_1=troco/100;
-                troco=troco%100;
-                cout << "1.00> " << euro_1 << "Troco> " << troco << endl;
+                euro_1=centimos/100;
+                centimos=centimos%100;
+                eax[2]=euro_1;
 
                 //Troco 0.50€
-                cent_50=troco/50;
-                troco=troco%50;
-                cout << "0.50> " << cent_50 << "Troco> " << troco << endl;
+                cent_50=centimos/50;
+                centimos=centimos%50;
+                eax[3]=cent_50;
 
                 //Troco 0.20€
-                cent_20=troco/20;
-                troco=troco%20;
-                cout << "0.20> " << cent_20 << "Troco> " << troco << endl;
+                cent_20=centimos/20;
+                centimos=centimos%20;
+                eax[4]=cent_20;
 
                 //Troco 0.10€
-                cent_10=troco/10;
-                troco=troco%10;
-                cout << "0.10> " << cent_10 << "Troco> " << troco << endl;
+                cent_10=centimos/10;
+                centimos=centimos%10;
+                eax[5]=cent_10;
 
                 //Troco 0.05€
-                cent_5=troco/5;
-                troco=troco%5;
-                cout << "0.5> " << cent_50 << "Troco> " << troco << endl;
+                cent_5=centimos/5;
+                centimos=centimos%5;
+                eax[6]=cent_5;
 
                 //Troco 0.02€
-                cent_2=troco/2;
-                troco=troco%2;
-                cout << "0.02> " << cent_2 << "Troco> " << troco << endl;
-                
+                cent_2=centimos/2;
+                centimos=centimos%2;
+                eax[7]=cent_2;
+                            
                 //Troco 0.01€
-                cent_1=troco;
-                cout << "0.01> " << cent_1 << "Troco> " << troco << endl;
-
-                //return 
+                cent_1=centimos;
+                eax[8]=cent_1;
+                
+                return eax; 
             }
         }
         
@@ -95,11 +106,85 @@ class Programa{
 int main(int argc, char const *argv[]){
 
     Programa programa;
+    Menu menu;
     int *esp;
 
-    programa.calc_troco(3.71,10);
+    float valor;
+    int pagamento;
+    int input;
+
+    esp=programa.calc_troco(3.71,10);
+
+    while (true){
+        menu.menu_principal();
+        cin >> input;
+        switch (input){
+            case 1:
+                menu.menu_troco();
+                cout << "Valor> "; cin >> valor;
+                cout << "Pagamento> "; cin >> pagamento; 
+                esp=programa.calc_troco(valor,pagamento);
+                if (*(esp+0)==1){
+                    menu.erro();
+                }else{
+                    for (size_t i=1;i<=8;i++){
+                        if(*(esp+i)!=0){
+                            if (*(esp+i)>1){
+
+                                switch (i){
+                                    case 1:
+                                        cout << *(esp+i) << " moedas de 2 euros";
+                                        break;
+                                    case 2:
+                                        cout << *(esp+i) << " moedas de 1 euro";
+                                        break;
+                                    case 3:
+                                        cout << *(esp+i) << " moedas de 50 centimos";
+                                        break;
+                                    /*etc..*/
+                                    
+                                    default:
+                                        break;
+                                }
+                                
+                            }else{
+
+                                switch (i){
+                                    case 1:
+                                        cout << *(esp+i) << " moeda de 2 euros";
+                                        break;
+                                    case 2:
+                                        cout << *(esp+i) << " moeda de 1 euro";
+                                        break;
+                                    case 3:
+                                        cout << *(esp+i) << " moeda de 50 centimos";
+                                        break;
+                                    /*etc..*/
+                                    
+                                    default:
+                                        break;
+                                }
+
+                            }
+                            
+                            
+                        }
+                    }
+                    
+                }
+                
+                
+                break;
+            case 0:
+                break;
+            default:
+                break;
+        }
+    }
+    
 
     for (size_t i=0;i<=8;i++){
+
         cout << *(esp+i) << endl;
     }
 
@@ -107,26 +192,3 @@ int main(int argc, char const *argv[]){
 
     return 0;
 }
-
-
-/*
-
-def calcchange(purchamt, payamt):
-change = payamt - purchamt
-
-cents = change*100+0.01
-
-print cents
-dollars = int(cents /100)
-cents = cents %100
-quarters = int(cents/25)
-cents = cents %25
-dimes = int(cents/10)
-cents = cents %10
-nickels = int(cents/5)
-cents = cents %5
-pennies = int(cents)
-
-return change, dollars, quarters, dimes, nickels, pennies
-
-*/
