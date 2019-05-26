@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 
 using namespace std;
 
@@ -7,10 +8,13 @@ class Menu{
         void erro(int err_numero){
             switch (err_numero){
                 case 1:
-                    cout << "\nNota invalida";
+                    system("cls");
+                    cout << "\nNota invalida\n\n";
                     break;
                 case 2:
-                    cout << "\nOpcao invalida";
+                    system("cls");
+                    cout << "\nOpcao invalida\n\n";
+                    system("pause");
                     break;
                 default:
                     break;
@@ -18,11 +22,13 @@ class Menu{
         }
         
         void menu_troco(){
+            system("cls");
             cout << "\n\t\t\tCAIXA DE PAGAMENTO\n\tSo sao aceites notas entre 5, 10, 20, 50, 100, 200, 500\n\n";
         }
 
         void menu_principal(){
-            cout << "\n\t\t\tCAIXA DE PAGAMENTO\n\t1 - Calcular Troco\n0 - Sair\n\nInput> ";
+            system("cls");
+            cout << "\n\t\t\tCAIXA DE PAGAMENTO\n\n\t1 - Calcular Troco\n\t0 - Sair\n\nInput> ";
         }
 
 };
@@ -58,12 +64,11 @@ class Programa{
 
             if (notas_aceites[0] != 1){
                 eax[0]=1;
-                return eax;
             }else{
                 eax[0]=0;
 
                 troco = pagamento-valor;
-                cout << "Troco> " << troco << endl;
+                cout << "Troco> " << troco << "\n\n";
 
                 centimos = troco*100+0.01;
 
@@ -105,9 +110,8 @@ class Programa{
                 //Troco 0.01€
                 cent_1=centimos;
                 eax[8]=cent_1;
-                
-                return eax; 
             }
+            return eax;
         }
         
 };
@@ -116,14 +120,12 @@ int main(int argc, char const *argv[]){
 
     Programa programa;
     Menu menu;
-    int *esp;
+    int *ebp;
 
     float valor;
     int pagamento;
     int input;
-
-    esp=programa.calc_troco(3.71,10);
-
+    
     while (true){
         menu.menu_principal();
         cin >> input;
@@ -132,38 +134,39 @@ int main(int argc, char const *argv[]){
                 menu.menu_troco();
                 cout << "Valor> "; cin >> valor;
                 cout << "Pagamento> "; cin >> pagamento; 
-                esp=programa.calc_troco(valor,pagamento);
-                if (*(esp+0)==1){
+                ebp=programa.calc_troco(valor,pagamento);
+                
+                if (*(ebp+0)==1){
                     menu.erro(1);
                 }else{
                     for (size_t i=1;i<=8;i++){
-                        if(*(esp+i)!=0){
-                            if (*(esp+i)>1){
+                        if(*(ebp+i)!=0){
+                            if (*(ebp+i)>1){
 
                                 switch (i){
                                     case 1:
-                                        cout << *(esp+i) << " moedas de 2 euros" << endl;
+                                        cout << *(ebp+i) << " moedas de 2 euros" << endl;
                                         break;
                                     case 2:
-                                        cout << *(esp+i) << " moedas de 1 euro" << endl;
+                                        cout << *(ebp+i) << " moedas de 1 euro" << endl;
                                         break;
                                     case 3:
-                                        cout << *(esp+i) << " moedas de 50 centimos" << endl;
+                                        cout << *(ebp+i) << " moedas de 50 centimos" << endl;
                                         break;
                                     case 4:
-                                        cout << *(esp+i) << " moedas de 20 centimos" << endl;
+                                        cout << *(ebp+i) << " moedas de 20 centimos" << endl;
                                         break;
                                     case 5:
-                                        cout << *(esp+i) << " moedas de 10 centimos" << endl;
+                                        cout << *(ebp+i) << " moedas de 10 centimos" << endl;
                                         break;
                                     case 6:
-                                        cout << *(esp+i) << " moedas de 5 centimos" << endl;
+                                        cout << *(ebp+i) << " moedas de 5 centimos" << endl;
                                         break;
                                     case 7:
-                                        cout << *(esp+i) << " moedas de 2 centimos" << endl;
+                                        cout << *(ebp+i) << " moedas de 2 centimos" << endl;
                                         break;
                                     case 8:
-                                        cout << *(esp+i) << " moedas de 1 centimo" << endl;
+                                        cout << *(ebp+i) << " moedas de 1 centimo" << endl;
                                         break;
                                     default:
                                         break;
@@ -171,28 +174,28 @@ int main(int argc, char const *argv[]){
                             }else{
                                 switch (i){
                                     case 1:
-                                        cout << *(esp+i) << " moeda de 2 euros" << endl;
+                                        cout << *(ebp+i) << " moeda de 2 euros" << endl;
                                         break;
                                     case 2:
-                                        cout << *(esp+i) << " moeda de 1 euro" << endl;
+                                        cout << *(ebp+i) << " moeda de 1 euro" << endl;
                                         break;
                                     case 3:
-                                        cout << *(esp+i) << " moeda de 50 centimos" << endl;
+                                        cout << *(ebp+i) << " moeda de 50 centimos" << endl;
                                         break;
                                     case 4:
-                                        cout << *(esp+i) << " moeda de 20 centimos" << endl;
+                                        cout << *(ebp+i) << " moeda de 20 centimos" << endl;
                                         break;
                                     case 5:
-                                        cout << *(esp+i) << " moeda de 10 centimos" << endl;
+                                        cout << *(ebp+i) << " moeda de 10 centimos" << endl;
                                         break;
                                     case 6:
-                                        cout << *(esp+i) << " moeda de 5 centimos" << endl;
+                                        cout << *(ebp+i) << " moeda de 5 centimos" << endl;
                                         break;
                                     case 7:
-                                        cout << *(esp+i) << " moeda de 2 centimos" << endl;
+                                        cout << *(ebp+i) << " moeda de 2 centimos" << endl;
                                         break;
                                     case 8:
-                                        cout << *(esp+i) << " moeda de 1 centimo" << endl;
+                                        cout << *(ebp+i) << " moeda de 1 centimo" << endl;
                                         break;
                                     default:
                                         break;
@@ -201,9 +204,11 @@ int main(int argc, char const *argv[]){
                         }
                     } 
                 }
+                cout << endl;
                 system("pause");
                 break;
             case 0:
+                return 0;
                 break;
             default:
                 menu.erro(2);
